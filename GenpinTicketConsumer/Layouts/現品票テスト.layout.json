@@ -1,0 +1,50 @@
+{
+  "basePdfPath": "../Assets/現品票サンプル_値のみ空欄.pdf",
+  "fontPath": "Fonts/MPLUS1p-Regular.ttf",
+  "fields": [
+    {
+      "name": "partNo",
+      "kind": "text",
+      "x": 21.06,
+      "y": 10.98,
+      "width": 48.42,
+      "height": 6.88,
+      "fontSize": 14,
+      "value": "PART-001"
+    },
+    {
+      "name": "lot",
+      "kind": "text",
+      "x": 20,
+      "y": 41.05,
+      "width": 74.08,
+      "height": 6.09,
+      "fontSize": 12,
+      "value": "LOT-2026-001"
+    },
+    {
+      "name": "qr",
+      "kind": "qrcode",
+      "x": 4.13,
+      "y": 51.9,
+      "width": 13.76,
+      "height": 11.11,
+      "fontSize": 12,
+      "value": "PART-001|LOT-2026-001"
+    },
+    {
+      "name": "barcode",
+      "kind": "code128",
+      "x": 22.5,
+      "y": 53.56,
+      "width": 64.82,
+      "height": 7.67,
+      "fontSize": 12,
+      "value": "PART-001"
+    }
+  ],
+  "pageWidth": 210,
+  "pageHeight": 297,
+  "reportName": "現品票テスト",
+  "schemaVersion": 1
+}

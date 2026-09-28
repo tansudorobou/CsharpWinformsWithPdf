@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PdfmeCore\PdfmeCore.csproj" />
+    <Content Include="Layouts\現品票テスト.layout.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="Assets\現品票サンプル_値のみ空欄.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\Fonts\MPLUS1p-Regular.ttf" Link="Fonts\MPLUS1p-Regular.ttf" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\Fonts\OFL.txt" Link="Fonts\OFL.txt" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+  <Target Name="BundlePdfmeForRelease" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\..\bundle-pdfme.ps1&quot; -OutputDir &quot;$(TargetDir).&quot;" />
+  </Target>
+  <Target Name="BundlePdfmeForPublish" AfterTargets="Publish" Condition="'$(Configuration)' == 'Release'">
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\..\bundle-pdfme.ps1&quot; -OutputDir &quot;$(PublishDir).&quot;" />
+  </Target>
+</Project>

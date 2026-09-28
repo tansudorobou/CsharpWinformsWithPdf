@@ -1,0 +1,30 @@
+{
+  "basePdfPath": "",
+  "fontPath": "Fonts\\MPLUS1p-Regular.ttf",
+  "fields": [
+    {
+      "name": "partNo",
+      "kind": "text",
+      "x": 20,
+      "y": 25,
+      "width": 80,
+      "height": 10,
+      "fontSize": 14,
+      "value": "SAMPLE"
+    },
+    {
+      "name": "qr",
+      "kind": "qrcode",
+      "x": 130,
+      "y": 22,
+      "width": 30,
+      "height": 30,
+      "fontSize": 12,
+      "value": "SAMPLE"
+    }
+  ],
+  "pageWidth": 210,
+  "pageHeight": 297,
+  "reportName": "サンプル帳票",
+  "schemaVersion": 1
+}

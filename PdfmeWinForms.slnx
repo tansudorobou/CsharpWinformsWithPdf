@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="GenpinTicketConsumer/GenpinTicketConsumer.csproj" />
+  <Project Path="PdfmeCli/PdfmeCli.csproj" />
+  <Project Path="PdfmeCore/PdfmeCore.csproj" />
+  <Project Path="PdfmeWinForms/PdfmeWinForms.csproj" />
+</Solution>

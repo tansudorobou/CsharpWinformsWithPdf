@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PdfmeCore\PdfmeCore.csproj" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4191.47" />
+    <Content Include="..\Fonts\MPLUS1p-Regular.ttf" Link="Fonts\MPLUS1p-Regular.ttf" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\Fonts\OFL.txt" Link="Fonts\OFL.txt" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\pdfme-runner\editor\editor.html" Link="pdfme-runner\editor\editor.html" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\pdfme-runner\editor\dist\editor.js" Link="pdfme-runner\editor\dist\editor.js" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <Target Name="RemoveUnusedWebView2WpfReference" BeforeTargets="ResolveAssemblyReferences">
+    <ItemGroup>
+      <Reference Remove="@(Reference)" Condition="'%(Reference.Filename)' == 'Microsoft.Web.WebView2.Wpf'" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="BuildPdfmeEditor" BeforeTargets="AssignTargetPaths">
+    <Exec WorkingDirectory="$(MSBuildProjectDirectory)\..\pdfme-runner" Command="npm run build:editor" />
+  </Target>
+
+  <Target Name="CopyPdfmeEditorWorker" AfterTargets="Build">
+    <ItemGroup>
+      <PdfmeEditorWorker Include="$(MSBuildProjectDirectory)\..\pdfme-runner\editor\dist\assets\*.js" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PdfmeEditorWorker)" DestinationFolder="$(TargetDir)pdfme-runner\editor\dist\assets" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="BundlePdfmeForRelease" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\..\bundle-pdfme.ps1&quot; -OutputDir &quot;$(TargetDir).&quot;" />
+  </Target>
+
+  <Target Name="BundlePdfmeForPublish" AfterTargets="Publish" Condition="'$(Configuration)' == 'Release'">
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\..\bundle-pdfme.ps1&quot; -OutputDir &quot;$(PublishDir).&quot;" />
+  </Target>
+
+</Project>
