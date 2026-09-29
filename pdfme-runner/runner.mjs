@@ -10,6 +10,7 @@ if (!jobPath || !outputPath) {
 
 try {
   const job = JSON.parse(await readFile(jobPath, 'utf8'));
+  // 既存PDFはバイト列、白紙帳票は用紙設定としてpdfmeに渡す。
   const basePdf = job.basePdfPath
     ? new Uint8Array(await readFile(job.basePdfPath))
     : { width: job.pageWidth ?? 210, height: job.pageHeight ?? 297, padding: [0, 0, 0, 0] };
@@ -24,6 +25,7 @@ try {
   const pdf = await generate({
     template: { basePdf, schemas: job.template.schemas },
     inputs: job.inputs,
+    // C#の項目種類名とpdfmeのプラグイン名をここで対応させる。
     plugins: { text, qrcode: barcodes.qrcode, code128: barcodes.code128 },
     options: Object.keys(options).length > 0 ? options : undefined,
   });

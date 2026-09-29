@@ -1,0 +1,17 @@
+{
+  "name": "pdfme-editor",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build-editor.mjs"
+  },
+  "dependencies": {
+    "@pdfme/common": "6.1.13",
+    "@pdfme/schemas": "6.1.13",
+    "@pdfme/ui": "6.1.13"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

@@ -22,9 +22,10 @@
 | `PdfmeWinForms/PdfmeVisualEditorForm.cs` | WebView2上のpdfme Designerとの通信 |
 | `PdfmeCli` | コマンド引数・標準入出力のみ |
 | `GenpinTicketConsumer` | 別アプリからの利用例 |
-| `pdfme-runner` / `Fonts` | 各実行アプリで共有するPDFmeランナーとフォントのソース |
+| `pdfme-runner` / `Fonts` | 各実行アプリで共有するPDF生成ランナーとフォントのソース |
+| `pdfme-editor` | WinFormsの編集画面だけが使うpdfme Designerとブラウザー用アセット |
 
-依存方向は、WinForms/CLI/利用例 → `PdfmeCore` → `pdfme-runner/runner.mjs` → pdfme npmパッケージです。WebView2のエディターは編集画面だけで使い、CLIとPDF生成APIは参照しません。PDFme固有のジョブ形式は `PdfmeJobBuilder` に閉じ込め、保存するレイアウトJSONとは分けます。
+依存方向は、WinForms/CLI/利用例 → `PdfmeCore` → `pdfme-runner/runner.mjs` → PDF生成用npmパッケージです。WinFormsの編集画面だけが `pdfme-editor` を使います。CLIと利用例のRelease出力にはUI用アセットとnpm依存を含めません。PDFme固有のジョブ形式は `PdfmeJobBuilder` に閉じ込め、保存するレイアウトJSONとは分けます。
 
 項目種類のC#側の選択肢・検証・ジョブ変換は `LayoutFieldTypes` を共有します。Node.js側のpdfmeプラグイン登録は言語境界にあるため、`runner.mjs` とエディターのJSにも同じ種類を登録します。
 

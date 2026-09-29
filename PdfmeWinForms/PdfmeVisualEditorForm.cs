@@ -29,12 +29,12 @@ internal sealed class PdfmeVisualEditorForm : Form
     {
         try
         {
-            var editorDir = Path.Combine(AppContext.BaseDirectory, "pdfme-runner", "editor");
+            var editorDir = Path.Combine(AppContext.BaseDirectory, "pdfme-editor", "editor");
             if (!File.Exists(Path.Combine(editorDir, "dist", "editor.js")))
-                throw new FileNotFoundException("pdfmeエディターが見つかりません。pdfme-runnerで npm run build:editor を実行してください。");
+                throw new FileNotFoundException("pdfmeエディターが見つかりません。pdfme-editorで npm run build を実行してください。");
             var workerDir = Path.Combine(editorDir, "dist", "assets");
             if (!Directory.Exists(workerDir) || !Directory.EnumerateFiles(workerDir, "clawpdf-worker-*.js").Any())
-                throw new FileNotFoundException("PDF描画ワーカーが見つかりません。pdfme-runnerで npm run build:editor を実行し、アプリを再ビルドしてください。");
+                throw new FileNotFoundException("PDF描画ワーカーが見つかりません。pdfme-editorで npm run build を実行し、アプリを再ビルドしてください。");
 
             await _webView.EnsureCoreWebView2Async();
             if (IsDisposed) return;

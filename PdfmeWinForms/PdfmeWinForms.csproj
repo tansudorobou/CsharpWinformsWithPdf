@@ -13,8 +13,8 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4191.47" />
     <Content Include="..\Fonts\MPLUS1p-Regular.ttf" Link="Fonts\MPLUS1p-Regular.ttf" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="..\Fonts\OFL.txt" Link="Fonts\OFL.txt" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="..\pdfme-runner\editor\editor.html" Link="pdfme-runner\editor\editor.html" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="..\pdfme-runner\editor\dist\editor.js" Link="pdfme-runner\editor\dist\editor.js" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\pdfme-editor\editor\editor.html" Link="pdfme-editor\editor\editor.html" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="..\pdfme-editor\editor\dist\editor.js" Link="pdfme-editor\editor\dist\editor.js" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <Target Name="RemoveUnusedWebView2WpfReference" BeforeTargets="ResolveAssemblyReferences">
@@ -24,14 +24,21 @@
   </Target>
 
   <Target Name="BuildPdfmeEditor" BeforeTargets="AssignTargetPaths">
-    <Exec WorkingDirectory="$(MSBuildProjectDirectory)\..\pdfme-runner" Command="npm run build:editor" />
+    <Exec WorkingDirectory="$(MSBuildProjectDirectory)\..\pdfme-editor" Command="npm run build" />
   </Target>
 
   <Target Name="CopyPdfmeEditorWorker" AfterTargets="Build">
     <ItemGroup>
-      <PdfmeEditorWorker Include="$(MSBuildProjectDirectory)\..\pdfme-runner\editor\dist\assets\*.js" />
+      <PdfmeEditorWorker Include="$(MSBuildProjectDirectory)\..\pdfme-editor\editor\dist\assets\*.js" />
     </ItemGroup>
-    <Copy SourceFiles="@(PdfmeEditorWorker)" DestinationFolder="$(TargetDir)pdfme-runner\editor\dist\assets" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(PdfmeEditorWorker)" DestinationFolder="$(TargetDir)pdfme-editor\editor\dist\assets" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="CopyPdfmeEditorWorkerForPublish" AfterTargets="Publish">
+    <ItemGroup>
+      <PdfmePublishEditorWorker Include="$(MSBuildProjectDirectory)\..\pdfme-editor\editor\dist\assets\*.js" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PdfmePublishEditorWorker)" DestinationFolder="$(PublishDir)pdfme-editor\editor\dist\assets" SkipUnchangedFiles="true" />
   </Target>
 
   <Target Name="BundlePdfmeForRelease" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">

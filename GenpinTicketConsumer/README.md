@@ -14,5 +14,5 @@ await new ReportGenerator().GenerateFromJsonAsync(layoutPath, json, outputPath);
 
 この例の実装は [TicketForm.cs](TicketForm.cs) にあります。レイアウトを変更した場合は、編集アプリで保存して再生成された `.Values.cs` と `.layout.json` を、このプロジェクトの `Layouts` にコピーしてください。背景PDFを変更した場合は `Assets` のPDFも更新してください。
 
-ReleaseビルドにはPDFmeランナーとNode.jsが同梱されます。配布時は `GenpinTicketConsumer\bin\Release\net10.0-windows\` フォルダー全体を使用します。
+Releaseビルドには生成専用のPDFmeランナーとNode.jsが同梱されます。`pdfme-editor` や `@pdfme/ui` は含まれません。配布時は `GenpinTicketConsumer\bin\Release\net10.0-windows\` フォルダー全体を使用します。
 

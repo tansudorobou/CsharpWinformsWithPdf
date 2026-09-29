@@ -16,8 +16,10 @@ window.chrome.webview.addEventListener('message', (event) => {
   if (event.data?.type !== 'load') return;
   try {
     const { layout, basePdf, font } = event.data;
+    // Designerがcontentを返さない項目でも、読み込み時の値を維持する。
     originalValues = Object.fromEntries(layout.fields.map((field) => [field.name, field.value]));
     const schemas = layout.fields.map((field) => ({
+      // 詳細設定よりレイアウトの基本項目を優先する。
       ...(field.pdfmeOptions ?? {}),
       name: field.name,
       type: field.kind,
@@ -56,6 +58,7 @@ document.getElementById('apply').addEventListener('click', () => {
     const pages = designer.getTemplate().schemas;
     if (pages.length !== 1) throw new Error('このアプリは1ページの配置に対応しています。ページを1つに戻してください。');
     const fields = pages[0].map((schema) => {
+      // Designer固有のIDと実行時フォント名を除き、詳細設定はJSONに残す。
       const {
         id: _id,
         name,

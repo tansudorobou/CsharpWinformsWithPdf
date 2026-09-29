@@ -13,6 +13,7 @@ await build({
   platform: 'browser',
   external: ['node:*'],
 });
+// PDF表示ワーカーはJSバンドルとは別ファイルとしてブラウザーから読み込まれる。
 await cp(
   fileURLToPath(new URL('./node_modules/@pdfme/converter/dist/assets/', import.meta.url)),
   fileURLToPath(new URL('./editor/dist/assets/', import.meta.url)),
